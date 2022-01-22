@@ -1,0 +1,4 @@
+#crypto-http-client:
+#  base-url: http://api.crypto.com
+#  all-trades-url: /v2/public/get-trades
+#  candle-stick-chart-url: /v2/public/get-candlestick?instrument_name={BTC_USDT}&timeframe={5m}
