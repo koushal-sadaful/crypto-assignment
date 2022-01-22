@@ -5,7 +5,6 @@ import crypto.assignment.dto.Trade;
 import crypto.assignment.transport.CryptoHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class TradeReconciliationService implements ReconciliationService {
     public void process() {
         List<Trade> allTrades = client.getAllTrades();
         CandleStickChart chartFetched = client.getCandleStickChart();
-        CandleStickChart chartGenerated = chartGenerator.generateChartFromTrades(allTrades);
+        CandleStickChart chartGenerated = chartGenerator.generateChartFromTrades(allTrades, chartFetched.getIntervalInMillis());
 
     }
 

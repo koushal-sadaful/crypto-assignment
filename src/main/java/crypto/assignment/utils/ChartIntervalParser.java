@@ -1,8 +1,4 @@
-package utils;
-
-import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
+package crypto.assignment.utils;
 
 public class ChartIntervalParser {
 

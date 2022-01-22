@@ -3,8 +3,7 @@ package crypto.assignment.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import net.minidev.json.annotate.JsonIgnore;
-import utils.ChartIntervalParser;
+import crypto.assignment.utils.ChartIntervalParser;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CandleStickChart {
@@ -24,5 +23,9 @@ public class CandleStickChart {
     @JsonSetter("interval")
     public void setIntervalInMillis(String interval) {
         intervalInMillis = ChartIntervalParser.parseIntervalStringToMillis(interval);
+    }
+
+    public double getIntervalInMillis() {
+        return intervalInMillis;
     }
 }

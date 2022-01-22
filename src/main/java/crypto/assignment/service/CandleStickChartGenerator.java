@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public class CandleStickChartGenerator implements ChartGenerator {
     @Override
-    public CandleStickChart generateChartFromTrades(List<Trade> tradeList) {
+    public CandleStickChart generateChartFromTrades(List<Trade> tradeList, double intervalInMillis) {
         return null;
     }
 }

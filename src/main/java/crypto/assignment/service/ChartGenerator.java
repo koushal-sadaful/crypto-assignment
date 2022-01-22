@@ -6,5 +6,5 @@ import crypto.assignment.dto.Trade;
 import java.util.List;
 
 public interface ChartGenerator {
-    CandleStickChart generateChartFromTrades(List<Trade> tradeList);
+    CandleStickChart generateChartFromTrades(List<Trade> tradeList, double intervalInMillis);
 }
