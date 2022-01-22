@@ -1,13 +1,12 @@
-package utils;
+package crypto.assignment.utils;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ChartIntervalParserTest {
 
@@ -20,9 +19,9 @@ class ChartIntervalParserTest {
 
     private static Stream<Arguments> intervalStringTestCases() {
         return Stream.of(
-                Arguments.of("1m", 1000),
-                Arguments.of("5m", 1000),
-                Arguments.of("15m", 1000),
+                Arguments.of("1m", 60000),
+                Arguments.of("5m", 300000),
+                Arguments.of("15m", 15000000),
                 Arguments.of("30m", 1000),
                 Arguments.of("1h", 1000),
                 Arguments.of("4h", 1000),

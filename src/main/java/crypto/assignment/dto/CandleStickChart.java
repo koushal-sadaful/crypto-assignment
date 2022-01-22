@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import crypto.assignment.utils.ChartIntervalParser;
 
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CandleStickChart {
 
@@ -15,7 +17,7 @@ public class CandleStickChart {
     private int depth;
 
     @JsonProperty("data")
-    private Iterable<CandleStick> candleSticks;
+    private List<CandleStick> candleSticks;
 
     @JsonProperty("interval")
     private double intervalInMillis;
@@ -27,5 +29,25 @@ public class CandleStickChart {
 
     public double getIntervalInMillis() {
         return intervalInMillis;
+    }
+
+    public List<CandleStick> getCandleSticks() {
+        return candleSticks;
+    }
+
+    public double getStartTimeInMillis() {
+        if (candleSticks.size() <= 0) {
+            return 0;
+        }
+        CandleStick firstCandleStick = candleSticks.get(0);
+        return firstCandleStick.getEndTime() - intervalInMillis;
+    }
+
+    public double getStartTimeOfLastCandle() {
+        if (candleSticks.size() <= 0) {
+            return 0;
+        }
+        CandleStick firstCandleStick = candleSticks.get(candleSticks.size() - 1);
+        return firstCandleStick.getEndTime() - intervalInMillis;
     }
 }

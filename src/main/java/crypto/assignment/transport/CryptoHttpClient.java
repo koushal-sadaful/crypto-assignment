@@ -27,7 +27,7 @@ public class CryptoHttpClient implements DataTransport {
         log.info("getAllTrades - Start fetching trades");
 
         Request request = new Request.Builder()
-                .url("http://api.crypto.com/v2/public/get-trades")
+                .url("http://api.crypto.com/v2/public/get-trades?instrument_name=BTC_USDT")
                 .build();
 
         String responseAsString = "";
