@@ -21,30 +21,17 @@ public class TradeReconciliationService implements ReconciliationService {
     private TradeDataAggregator aggregator;
 
     @Override
-    public void process() {
-        List<Trade> allTrades = client.getAllTrades();
+    public void process(String instrumentName, String timeInterval) {
+        List<Trade> allTrades = client.getAllTrades(instrumentName);
+        CandleStickChart chartFetched = client.getCandleStickChart(instrumentName, timeInterval);
 
-        CandleStickChart chartFetched = client.getCandleStickChart();
         HashMap<Double, ArrayList<Trade>> tradesInTimeBuckets = aggregator.groupByTimeBuckets(allTrades, chartFetched.getStartTimeInMillis(), chartFetched.getIntervalInMillis());
 
-
-
-
-        chartFetched.getCandleSticks().forEach(candleStick -> {
-            double endTime = candleStick.getEndTime();
-            ArrayList<Trade> allTradesInTimeBucket  = tradesInTimeBuckets.get(endTime);
-            CandleStick expectedCandleStickStatistics = aggregator.generateCandleStickData(endTime, allTradesInTimeBucket);
-
-
-
-
-
-        });
-
-
-
-
-
+//        chartFetched.getCandleSticks().forEach(candleStick -> {
+//            double endTime = candleStick.getEndTime();
+//            ArrayList<Trade> allTradesInTimeBucket  = tradesInTimeBuckets.get(endTime);
+//            CandleStick expectedCandleStickStatistics = aggregator.generateCandleStickData(endTime, allTradesInTimeBucket);
+//        });
     }
 
     @Override

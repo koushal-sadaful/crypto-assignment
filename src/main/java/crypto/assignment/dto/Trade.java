@@ -7,6 +7,10 @@ import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Trade implements Comparable<Trade>  {
+
+    public Trade() {
+    }
+
     @JsonProperty("d")
     private double id;
 

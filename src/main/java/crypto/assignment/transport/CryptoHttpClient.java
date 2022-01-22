@@ -23,11 +23,12 @@ public class CryptoHttpClient implements DataTransport {
     private static final OkHttpClient client = new OkHttpClient();
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public List<Trade> getAllTrades() {
-        log.info("getAllTrades - Start fetching trades");
+    public List<Trade> getAllTrades(String instrumentName) {
+        String url = "http://api.crypto.com/v2/public/get-trades?instrument_name=" + instrumentName;
+        log.info("getAllTrades - Start fetching trades from: " + url);
 
         Request request = new Request.Builder()
-                .url("http://api.crypto.com/v2/public/get-trades?instrument_name=BTC_USDT")
+                .url(url)
                 .build();
 
         String responseAsString = "";
@@ -51,10 +52,10 @@ public class CryptoHttpClient implements DataTransport {
     }
 
     @Override
-    public CandleStickChart getCandleStickChart() {
-        final String uri = "http://api.crypto.com/v2/public/get-candlestick?instrument_name=BTC_USDT&timeframe=5m";
+    public CandleStickChart getCandleStickChart(String instrumentName, String timeframe) {
+        final String uri = "http://api.crypto.com/v2/public/get-candlestick?instrument_name=" + instrumentName + "&timeframe=" + timeframe;
 
-        log.info("getCandleStickChart - fetching candle stick data");
+        log.info("getCandleStickChart - Start fetching candlestick data from: "+ uri);
 
         Request request = new Request.Builder()
                 .url(uri)

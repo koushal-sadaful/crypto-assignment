@@ -10,11 +10,11 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CandleStickChart {
 
+    public CandleStickChart() {
+    }
+
     @JsonProperty("instrument_name")
     private String instrumentName;
-
-    @JsonProperty("depth")
-    private int depth;
 
     @JsonProperty("data")
     private List<CandleStick> candleSticks;

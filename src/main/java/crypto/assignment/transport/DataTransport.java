@@ -5,6 +5,6 @@ import crypto.assignment.dto.Trade;
 import java.util.List;
 
 public interface DataTransport {
-    List<Trade> getAllTrades();
-    CandleStickChart getCandleStickChart();
+    List<Trade> getAllTrades(String instrumentName);
+    CandleStickChart getCandleStickChart(String instrumentName, String timeframe);
 }

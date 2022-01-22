@@ -7,6 +7,10 @@ import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CandleStick {
+
+    public CandleStick() {
+    }
+
     public CandleStick(double endTime, BigDecimal high, BigDecimal low, BigDecimal open, BigDecimal close, BigDecimal volume) {
         this.endTime = endTime;
         this.high = high;
