@@ -1,6 +1,6 @@
 package crypto.assignment.transport;
-import crypto.assignment.models.CandleStickChart;
-import crypto.assignment.models.Trade;
+import crypto.assignment.dto.CandleStickChart;
+import crypto.assignment.dto.Trade;
 
 import java.util.List;
 

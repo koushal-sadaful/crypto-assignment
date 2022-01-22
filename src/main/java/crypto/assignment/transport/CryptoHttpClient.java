@@ -2,8 +2,8 @@ package crypto.assignment.transport;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import crypto.assignment.models.CandleStickChart;
-import crypto.assignment.models.Trade;
+import crypto.assignment.dto.CandleStickChart;
+import crypto.assignment.dto.Trade;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
