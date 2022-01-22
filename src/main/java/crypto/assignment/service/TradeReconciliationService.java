@@ -1,4 +1,37 @@
 package crypto.assignment.service;
 
-public class TradeReconciliationService {
+import crypto.assignment.dto.CandleStickChart;
+import crypto.assignment.dto.Trade;
+import crypto.assignment.transport.CryptoHttpClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Component
+public class TradeReconciliationService implements ReconciliationService {
+
+    @Autowired
+    private CryptoHttpClient client;
+
+    @Autowired
+    private CandleStickChartGenerator chartGenerator;
+
+    @Override
+    public void process() {
+        List<Trade> allTrades = client.getAllTrades();
+        CandleStickChart chartFetched = client.getCandleStickChart();
+        CandleStickChart chartGenerated = chartGenerator.generateChartFromTrades(allTrades);
+
+    }
+
+    @Override
+    public void reconcile(CandleStickChart first, CandleStickChart second) {
+
+    }
+
+
+
+
 }

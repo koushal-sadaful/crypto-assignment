@@ -14,14 +14,17 @@ repositories {
 }
 
 dependencies {
-	// tag::actuator[]
+
 	implementation "com.squareup.okhttp3:okhttp:3.8.1"
 	implementation "com.jayway.jsonpath:json-path:2.6.0"
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	// end::actuator[]
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	// tag::tests[]
+
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('org.junit.jupiter:junit-jupiter-params:5.8.1')
+	testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.1')
+	testImplementation('org.junit.jupiter:junit-jupiter-engine:5.8.1')
 	// end::tests[]
 }
 

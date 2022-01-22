@@ -2,6 +2,9 @@ package crypto.assignment.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import net.minidev.json.annotate.JsonIgnore;
+import utils.ChartIntervalParser;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CandleStickChart {
@@ -12,10 +15,14 @@ public class CandleStickChart {
     @JsonProperty("depth")
     private int depth;
 
-    @JsonProperty("interval")
-    private String interval;
-
     @JsonProperty("data")
     private Iterable<CandleStick> candleSticks;
 
+    @JsonProperty("interval")
+    private double intervalInMillis;
+
+    @JsonSetter("interval")
+    public void setIntervalInMillis(String interval) {
+        intervalInMillis = ChartIntervalParser.parseIntervalStringToMillis(interval);
+    }
 }
