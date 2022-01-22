@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import crypto.assignment.transport.CryptoHttpClient;
 
 @RestController
-public class HelloController {
+public class MainController {
 
 	private int requestCount = 0;
 

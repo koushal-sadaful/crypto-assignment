@@ -16,6 +16,7 @@ repositories {
 dependencies {
 	// tag::actuator[]
 	implementation "com.squareup.okhttp3:okhttp:3.8.1"
+	implementation "com.jayway.jsonpath:json-path:2.6.0"
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	// end::actuator[]
 	implementation 'org.springframework.boot:spring-boot-starter-web'
