@@ -1,10 +1,15 @@
 package crypto.assignment.utils;
 
-public class ChartIntervalParser {
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+public class ChartIntervalUtils {
 
     private final static double ONE_MIN_IN_MILLIS = 60000;
     private final static double ONE_HOUR_IN_MILLIS = 3600000;
     private final static double ONE_DAY_IN_MILLIS = 86400000;
+    private final static String[] validIntervals = new String[]{"1m", "5m", "15m", "30m", "1h", "4h", "6h", "12h", "1D", "7D", "14D", "1M"};
 
     public static double parseIntervalStringToMillis(String interval) {
         double durationInMillis;
@@ -49,6 +54,11 @@ public class ChartIntervalParser {
                 throw new IllegalArgumentException("Invalid Interval provided");
         }
         return durationInMillis;
+    }
+
+    public static boolean isValidInterval(String interval) {
+        Set<String> validIntervalSet = new HashSet<>(Arrays.asList(validIntervals));
+        return  validIntervalSet.contains(interval);
     }
 
 }

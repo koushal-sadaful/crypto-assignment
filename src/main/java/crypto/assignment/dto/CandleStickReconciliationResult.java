@@ -60,4 +60,15 @@ public class CandleStickReconciliationResult {
         this.timestamp = timestamp;
         this.cannotBeVerified = cannotBeVerified;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        CandleStickReconciliationResult result = (CandleStickReconciliationResult) obj;
+        return timestamp == result.timestamp &&
+                highPriceMatch == result.isHighPriceMatch() &&
+                lowPriceMatch == result.isLowPriceMatch() &&
+                openPriceMatch == result.isOpenPriceMatch() &&
+                closePriceMatch == result.isClosePriceMatch() &&
+                cannotBeVerified == result.isCannotBeVerified();
+    }
 }

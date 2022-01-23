@@ -3,6 +3,7 @@ package crypto.assignment.service;
 import crypto.assignment.dto.*;
 import crypto.assignment.transport.CryptoHttpClient;
 import crypto.assignment.utils.CandleStickReconciliation;
+import crypto.assignment.utils.ChartIntervalUtils;
 import crypto.assignment.utils.TimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,8 @@ public class TradeReconciliationRequestProcessor implements ReconciliationReques
     @Override
     public CandleStickChartReconciliationResult processRequest(String instrumentName, String timeInterval) {
         log.info(String.format("Start processing request for instrument=%s, interval=%s.", instrumentName, timeInterval));
-        CandleStickChartReconciliationResult candleStickChartReconciliationResult = new CandleStickChartReconciliationResult(instrumentName);
+        if (!ChartIntervalUtils.isValidInterval(timeInterval))
+            return new CandleStickChartReconciliationResult(instrumentName, "Invalid time interval:" + timeInterval);
 
         try {
             CandleStickChart chartFetched = client.getCandleStickChart(instrumentName, timeInterval);
@@ -46,28 +48,13 @@ public class TradeReconciliationRequestProcessor implements ReconciliationReques
             );
 
             HashMap<Double, ArrayList<Trade>> tradesInTimeBuckets = aggregator.groupByTimeBuckets(allTrades, chartFetched.getEndTimeOfFirstCandle(), chartFetched.getEndTimeOfLastCandle(), chartFetched.getIntervalInMillis());
-
-            chartFetched.getCandleSticks().forEach(candleStick -> {
-                CandleStickReconciliationResult result;
-                double endTime = candleStick.getEndTime();
-                if (tradesInTimeBuckets.containsKey(endTime)) {
-//                    log.error(String.format("Processing trade list for time bucket endTime=%s", TimeFormatter.convertUnixToHuman(endTime)));
-                    ArrayList<Trade> allTradesInTimeBucket = tradesInTimeBuckets.get(endTime);
-                    CandleStick computedCandleStickData = aggregator.generateCandleStickData(endTime, allTradesInTimeBucket);
-                    result = CandleStickReconciliation.reconcile(candleStick, computedCandleStickData);
-                } else {
-                    log.error(String.format("No trades for time bucket endTime=%s", TimeFormatter.convertUnixToHuman(endTime)));
-                    result = CandleStickReconciliationResult.createNonVerifiableResult(endTime);
-                }
-                candleStickChartReconciliationResult.addResult(result);
-            });
+            CandleStickChartReconciliationResult candleStickChartReconciliationResult = reconciliationEngine.reconcile(chartFetched, tradesInTimeBuckets);
+            return candleStickChartReconciliationResult;
         } catch (Exception exception) {
             log.error(String.format("Failed to process request for instrument=%s, interval=%s.", instrumentName, timeInterval));
             exception.printStackTrace();
             log.error(exception.getLocalizedMessage());
+            return new CandleStickChartReconciliationResult(instrumentName, "Failed to process request: " + exception.getMessage());
         }
-
-        return candleStickChartReconciliationResult;
     }
-
 }

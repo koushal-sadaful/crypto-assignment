@@ -49,6 +49,6 @@ public class Trade {
     @Override
     public boolean equals(Object obj) {
         Trade second = (Trade) obj;
-        return price.equals(second.price) && side.equals(second.side) && quantity.equals(second.quantity) && timestamp == second.timestamp;
+        return id == id && price.equals(second.price) && side.equals(second.side) && quantity.equals(second.quantity) && timestamp == second.timestamp;
     }
 }

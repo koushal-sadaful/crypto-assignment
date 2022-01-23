@@ -3,7 +3,7 @@ package crypto.assignment.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import crypto.assignment.utils.ChartIntervalParser;
+import crypto.assignment.utils.ChartIntervalUtils;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class CandleStickChart {
 
     @JsonSetter("interval")
     public void setIntervalInMillis(String interval) {
-        intervalInMillis = ChartIntervalParser.parseIntervalStringToMillis(interval);
+        intervalInMillis = ChartIntervalUtils.parseIntervalStringToMillis(interval);
     }
 
     public double getIntervalInMillis() {
@@ -55,5 +55,9 @@ public class CandleStickChart {
         }
         CandleStick firstCandleStick = candleSticks.get(candleSticks.size() - 1);
         return firstCandleStick.getEndTime();
+    }
+
+    public String getInstrumentName() {
+        return instrumentName;
     }
 }

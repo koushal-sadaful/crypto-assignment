@@ -1,6 +1,5 @@
 package crypto.assignment.utils;
 
-import crypto.assignment.dto.CandleStickChart;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,12 +9,12 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ChartIntervalParserTest {
+class ChartIntervalUtilsTest {
 
     @ParameterizedTest
     @MethodSource("intervalStringTestCases")
     void parseIntervalStringToMillis_convert_interval_string_toMilli(String intervalString, double expectedMillisecond) {
-        double actualMillisecond = ChartIntervalParser.parseIntervalStringToMillis(intervalString);
+        double actualMillisecond = ChartIntervalUtils.parseIntervalStringToMillis(intervalString);
         assertEquals(expectedMillisecond, actualMillisecond);
     }
 
@@ -23,7 +22,7 @@ class ChartIntervalParserTest {
     void setIntervalInMillis_throws_error_if_invalid_interval() {
         IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> ChartIntervalParser.parseIntervalStringToMillis("1X"),
+                () -> ChartIntervalUtils.parseIntervalStringToMillis("1X"),
                 "Expected setIntervalInMillis() to throw an exception for invalid interval"
         );
 
