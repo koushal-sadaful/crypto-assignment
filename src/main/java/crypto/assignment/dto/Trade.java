@@ -45,4 +45,10 @@ public class Trade {
     public BigDecimal getPrice() {
         return price;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Trade second = (Trade) obj;
+        return price.equals(second.price) && side.equals(second.side) && quantity.equals(second.quantity) && timestamp == second.timestamp;
+    }
 }

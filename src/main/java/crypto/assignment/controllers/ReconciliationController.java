@@ -1,7 +1,7 @@
 package crypto.assignment.controllers;
 
 import crypto.assignment.dto.CandleStickChartReconciliationResult;
-import crypto.assignment.service.TradeReconciliationService;
+import crypto.assignment.service.TradeReconciliationRequestProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ReconciliationController {
 
-    private int requestCount = 0;
     private static final Logger log = LoggerFactory.getLogger(ReconciliationController.class);
 
     @Autowired
-    private TradeReconciliationService tradeReconciliationService;
+    private TradeReconciliationRequestProcessor tradeReconciliationRequestProcessor;
 
     @GetMapping("/reconcile")
     public @ResponseBody
@@ -25,10 +24,8 @@ public class ReconciliationController {
                                                          @RequestParam("interval") String timeInterval) {
 
         log.info("Reconciliation request received for instrument=" + instrumentName + ", timeInterval=" + timeInterval);
-
-        tradeReconciliationService.process(instrumentName, timeInterval);
-        requestCount++;
-        return new CandleStickChartReconciliationResult();
+        log.info(String.format("Reconciliation request received for instrument, instrument=%s, timeInterval=%s", instrumentName, timeInterval));
+        return tradeReconciliationRequestProcessor.processRequest(instrumentName, timeInterval);
     }
 
 }

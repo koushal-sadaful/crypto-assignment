@@ -41,12 +41,19 @@ public class CandleStickChart {
         return candleSticks;
     }
 
-    public double getStartTimeInMillis() {
+    public double getEndTimeOfFirstCandle() {
         if (candleSticks.size() <= 0) {
             return 0;
         }
         CandleStick firstCandleStick = candleSticks.get(0);
-        return firstCandleStick.getEndTime() - intervalInMillis;
+        return firstCandleStick.getEndTime();
     }
 
+    public double getEndTimeOfLastCandle() {
+        if (candleSticks.size() <= 0) {
+            return 0;
+        }
+        CandleStick firstCandleStick = candleSticks.get(candleSticks.size() - 1);
+        return firstCandleStick.getEndTime();
+    }
 }

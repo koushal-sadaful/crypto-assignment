@@ -6,10 +6,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 class TradeDataAggregatorTest {
 
@@ -23,39 +26,53 @@ class TradeDataAggregatorTest {
     @Test
     void generateChartFromTrades_can_generate_chart_data_from_trades() {
         ArrayList<Trade> trades = new ArrayList<>();
-        double firstTradeTimestamp = Double.parseDouble("1642869300000");
-        double secondTradeTimestamp = Double.parseDouble("1642869600000");
-        double thirdTradeTimestamp = Double.parseDouble("1642869900000");
-        double fourthTradeTimestamp = Double.parseDouble("1642869900100");
-        double interval = Double.parseDouble("300000");
+        double firstTradeTimestamp = Double.parseDouble("50");
+        double secondTradeTimestamp = Double.parseDouble("100");
+        double thirdTradeTimestamp = Double.parseDouble("200");
+        double fourthTradeTimestamp = Double.parseDouble("300");
+        double fifthTradeTimestamp = Double.parseDouble("1000");
+        double interval = 100;
+        double chartStartTime = 0;
+        double chartEndTime = 1500;
 
         Trade firstTrade = new Trade(1, "BUY", BigDecimal.valueOf(1.01), BigDecimal.valueOf(100), firstTradeTimestamp);
         Trade secondTrade = new Trade(2, "SELL", BigDecimal.valueOf(2.01), BigDecimal.valueOf(200), secondTradeTimestamp);
         Trade thirdTrade = new Trade(3, "SELL", BigDecimal.valueOf(4.01), BigDecimal.valueOf(300), thirdTradeTimestamp);
         Trade fourthTrade = new Trade(4, "BUY", BigDecimal.valueOf(5.01), BigDecimal.valueOf(500), fourthTradeTimestamp);
+        Trade fifthTrade = new Trade(5, "BUY", BigDecimal.valueOf(6.01), BigDecimal.valueOf(500), fifthTradeTimestamp);
 
         trades.add(thirdTrade);
         trades.add(secondTrade);
         trades.add(firstTrade);
         trades.add(fourthTrade);
+        trades.add(fifthTrade);
 
-        HashMap<Double, ArrayList<Trade>> tradeGroup = tradeDataAggregatorUnderTest.groupByTimeBuckets(trades, firstTradeTimestamp, interval);
+        HashMap<Double, ArrayList<Trade>> tradesGroupedByTime = tradeDataAggregatorUnderTest.groupByTimeBuckets(trades, chartStartTime, chartEndTime, interval);
 
-        ArrayList<Trade> firstBucket = new ArrayList<>();
-        firstBucket.add(firstTrade);
+        ArrayList<Trade> tradesInTimeBucketKey100 = new ArrayList<>();
+        tradesInTimeBucketKey100.add(firstTrade);
+        tradesInTimeBucketKey100.add(secondTrade);
 
-        ArrayList<Trade> secondBucket = new ArrayList<>();
-        secondBucket.add(secondTrade);
+        ArrayList<Trade> tradesInTimeBucketKey200 = new ArrayList<>();
+        tradesInTimeBucketKey200.add(thirdTrade);
 
-        ArrayList<Trade> thirdBucket = new ArrayList<>();
-        thirdBucket.add(thirdTrade);
-        thirdBucket.add(fourthTrade);
+        ArrayList<Trade> tradesInTimeBucketKey300 = new ArrayList<>();
+        tradesInTimeBucketKey300.add(fourthTrade);
+
+        ArrayList<Trade> tradesInTimeBucketKey1000 = new ArrayList<>();
+        tradesInTimeBucketKey1000.add(fifthTrade);
 
 
-        assertEquals(3, tradeGroup.size());
-        assertIterableEquals(firstBucket, tradeGroup.get(firstTradeTimestamp + interval));
-        assertIterableEquals(secondBucket, tradeGroup.get(secondTradeTimestamp + interval));
-        assertIterableEquals(thirdBucket, tradeGroup.get(thirdTradeTimestamp + interval));
+        assertEquals(16, tradesGroupedByTime.size());
+        double[] expectedTradeBucketToBeEmpty = new double[]{0, 400, 500, 600, 700, 800, 900, 1100, 1200, 1300, 1400, 1500};
+        for (double key : expectedTradeBucketToBeEmpty) {
+            assertTrue(tradesGroupedByTime.get(key).isEmpty());
+        }
+
+        assertIterableEquals(tradesInTimeBucketKey100, tradesGroupedByTime.get(100.0));
+        assertIterableEquals(tradesInTimeBucketKey200, tradesGroupedByTime.get(200.0));
+        assertIterableEquals(tradesInTimeBucketKey300, tradesGroupedByTime.get(300.0));
+        assertIterableEquals(tradesInTimeBucketKey1000, tradesGroupedByTime.get(1000.0));
 
     }
 
@@ -79,5 +96,17 @@ class TradeDataAggregatorTest {
         assertEquals(BigDecimal.valueOf(6.00), candleStickData.getClose());
         assertEquals(BigDecimal.valueOf(14.01), candleStickData.getHigh());
         assertEquals(BigDecimal.valueOf(5.00), candleStickData.getLow());
+    }
+
+    @Test
+    void generateCandleStickData_handles_empty_trade_list() {
+        ArrayList<Trade> trades = new ArrayList<>();
+
+        CandleStick candleStickData = tradeDataAggregatorUnderTest.generateCandleStickData(Double.parseDouble("1000"), trades);
+        assertEquals(BigDecimal.ZERO, candleStickData.getVolume());
+        assertEquals(BigDecimal.ZERO, candleStickData.getOpen());
+        assertEquals(BigDecimal.ZERO, candleStickData.getClose());
+        assertEquals(BigDecimal.ZERO, candleStickData.getHigh());
+        assertEquals(BigDecimal.ZERO, candleStickData.getLow());
     }
 }

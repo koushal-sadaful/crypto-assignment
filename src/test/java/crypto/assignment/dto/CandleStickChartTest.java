@@ -1,6 +1,5 @@
 package crypto.assignment.dto;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,7 +42,7 @@ class CandleStickChartTest {
         candleSticks.add(new CandleStick(90000, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.TEN));
 
         candleStickChartUnderTest = new CandleStickChart("BTC_USD", candleSticks, 1);
-        assertEquals(79999, candleStickChartUnderTest.getStartTimeInMillis());
+        assertEquals(80000, candleStickChartUnderTest.getEndTimeOfFirstCandle());
     }
 
     @Test
@@ -51,6 +50,6 @@ class CandleStickChartTest {
         ArrayList<CandleStick> candleSticks = new ArrayList<>();
 
         candleStickChartUnderTest = new CandleStickChart("BTC_USD", candleSticks, 1);
-        assertEquals(0, candleStickChartUnderTest.getStartTimeInMillis());
+        assertEquals(0, candleStickChartUnderTest.getEndTimeOfFirstCandle());
     }
 }
