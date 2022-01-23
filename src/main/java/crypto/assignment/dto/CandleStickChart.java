@@ -13,6 +13,12 @@ public class CandleStickChart {
     public CandleStickChart() {
     }
 
+    public CandleStickChart(String instrumentName, List<CandleStick> candleSticks, double intervalInMillis) {
+        this.instrumentName = instrumentName;
+        this.candleSticks = candleSticks;
+        this.intervalInMillis = intervalInMillis;
+    }
+
     @JsonProperty("instrument_name")
     private String instrumentName;
 
@@ -43,11 +49,4 @@ public class CandleStickChart {
         return firstCandleStick.getEndTime() - intervalInMillis;
     }
 
-    public double getStartTimeOfLastCandle() {
-        if (candleSticks.size() <= 0) {
-            return 0;
-        }
-        CandleStick firstCandleStick = candleSticks.get(candleSticks.size() - 1);
-        return firstCandleStick.getEndTime() - intervalInMillis;
-    }
 }

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Trade implements Comparable<Trade>  {
+public class Trade {
 
     public Trade() {
     }
@@ -40,11 +40,6 @@ public class Trade implements Comparable<Trade>  {
 
     public double getTimestamp() {
         return timestamp;
-    }
-
-    @Override
-    public int compareTo(Trade o) {
-       return Double.compare(this.getTimestamp(), o.getTimestamp());
     }
 
     public BigDecimal getPrice() {

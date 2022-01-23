@@ -2,29 +2,53 @@ package crypto.assignment.utils;
 
 public class ChartIntervalParser {
 
-    public static double parseIntervalStringToMillis(String interval){
-        int lastCharIndex = interval.length() - 1;
-        String durationString = interval.substring(lastCharIndex);
-        String multiplierString = interval.substring(0, lastCharIndex);
+    private final static double ONE_MIN_IN_MILLIS = 60000;
+    private final static double ONE_HOUR_IN_MILLIS = 3600000;
+    private final static double ONE_DAY_IN_MILLIS = 86400000;
+
+    public static double parseIntervalStringToMillis(String interval) {
         double durationInMillis;
-        switch (durationString){
-            case ("m"):
-                durationInMillis = 60 * 1000;
+        switch (interval) {
+            case ("1m"):
+                durationInMillis = ONE_MIN_IN_MILLIS;
                 break;
-            case ("h") :
-                durationInMillis = 60 * 60 * 1000;
+            case ("5m"):
+                durationInMillis = 5 * ONE_MIN_IN_MILLIS;
                 break;
-            case ("D") :
-                durationInMillis = 24 * 60 * 60 * 1000;
+            case ("15m"):
+                durationInMillis = 15 * ONE_MIN_IN_MILLIS;
                 break;
-            case ("M"):
-                durationInMillis = 30 * 14 * 60 * 60 * 1000;
+            case ("30m"):
+                durationInMillis = 30 * ONE_MIN_IN_MILLIS;
+                break;
+            case ("1h"):
+                durationInMillis = ONE_HOUR_IN_MILLIS;
+                break;
+            case ("4h"):
+                durationInMillis = 4 * ONE_HOUR_IN_MILLIS;
+                break;
+            case ("6h"):
+                durationInMillis = 6 * ONE_HOUR_IN_MILLIS;
+                break;
+            case ("12h"):
+                durationInMillis = 12 * ONE_HOUR_IN_MILLIS;
+                break;
+            case ("1D"):
+                durationInMillis = ONE_DAY_IN_MILLIS;
+                break;
+            case ("7D"):
+                durationInMillis = 7 * ONE_DAY_IN_MILLIS;
+                break;
+            case ("14D"):
+                durationInMillis = 14 * ONE_DAY_IN_MILLIS;
+                break;
+            case ("1M"):
+                durationInMillis = 30 * ONE_DAY_IN_MILLIS;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid Interval provided");
         }
-        double multiplier = Double.parseDouble(multiplierString);
-        return multiplier * durationInMillis;
+        return durationInMillis;
     }
 
 }

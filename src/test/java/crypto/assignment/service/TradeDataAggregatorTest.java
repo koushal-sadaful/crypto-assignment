@@ -23,10 +23,10 @@ class TradeDataAggregatorTest {
     @Test
     void generateChartFromTrades_can_generate_chart_data_from_trades() {
         ArrayList<Trade> trades = new ArrayList<>();
-        double firstTradeTimestamp = Double.parseDouble("1234500000000");
-        double secondTradeTimestamp = Double.parseDouble("1234500300000");
-        double thirdTradeTimestamp = Double.parseDouble("123450060000");
-        double fourthTradeTimestamp = Double.parseDouble("1234500600640");
+        double firstTradeTimestamp = Double.parseDouble("1642869300000");
+        double secondTradeTimestamp = Double.parseDouble("1642869600000");
+        double thirdTradeTimestamp = Double.parseDouble("1642869900000");
+        double fourthTradeTimestamp = Double.parseDouble("1642869900100");
         double interval = Double.parseDouble("300000");
 
         Trade firstTrade = new Trade(1, "BUY", BigDecimal.valueOf(1.01), BigDecimal.valueOf(100), firstTradeTimestamp);

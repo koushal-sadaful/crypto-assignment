@@ -17,12 +17,7 @@ public class TradeDataAggregator implements DataAggregator {
         HashMap<Double, ArrayList<Trade>> tradesInTimeBuckets = new HashMap<>() {
         };
 
-        Collections.sort(tradeList);
         tradeList.sort(Comparator.comparingDouble(Trade::getTimestamp));
-
-        List<Trade> sortedTrades = tradeList.stream()
-                .sorted(Comparator.comparing(Trade::getTimestamp))
-                .collect(Collectors.toList());
 
         double currentStartTime = startTimeInMillis;
         double currentEndTime = currentStartTime + intervalInMillis;
