@@ -16,7 +16,7 @@ public class CandleStickReconciliationResult {
     private boolean openPriceMatch;
     @JsonProperty("close_price_match")
     private boolean closePriceMatch;
-    @JsonProperty("not_enough_data_for_verification")
+    @JsonProperty("unverifiable")
     private boolean cannotBeVerified;
 
     public double getTimestamp() {

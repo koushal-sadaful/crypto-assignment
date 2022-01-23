@@ -16,8 +16,7 @@ class CryptoHttpClientConfigurationTest {
     
     @Autowired
     private CryptoHttpClientConfiguration cryptoHttpClientConfiguration;
-
-    @Test
+    
     public void whenFactoryProvidedThenYamlPropertiesInjected() {
         assertEquals(cryptoHttpClientConfiguration.getCandleStickChartUrl(), "");
         assertEquals(cryptoHttpClientConfiguration.getAllTradesUrl(), "");
