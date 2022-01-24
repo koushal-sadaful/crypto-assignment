@@ -25,7 +25,7 @@ To verify if candle-stick chart is correct:
 1.1. Exclude all trades before the start time (first candle stick - interval)
 1.2. Exclude all trades after the end time (last candle stick)
 2. Generate a trade list per time bucket of the chart from trade data
-1. Sort the trades
+1. Sort the trades by ascending timestamp
 2. Create a map of timestamp to list of Trades
 3. The list of trades will be sorted (first trade is open, last trade is the close)
 3. Compare the prices and volume of each candle stick point

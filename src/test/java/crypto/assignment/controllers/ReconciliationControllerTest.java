@@ -12,6 +12,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -31,7 +32,7 @@ class ReconciliationControllerTest {
     public void reconcileRequest_processes_reconciliation_and_shows_result() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/reconcile?instrument_name=ETH_CRO&interval=5m").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Invalid time interval")));
+                .andExpect(jsonPath("$.instrument_name").value("ETH_CRO"));
     }
 
 }

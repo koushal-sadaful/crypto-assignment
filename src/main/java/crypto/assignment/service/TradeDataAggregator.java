@@ -74,7 +74,7 @@ public class TradeDataAggregator implements DataAggregator {
     }
 
     private void addTradeToBucket(HashMap<Double, ArrayList<Trade>> tradeBucketsByEndTime, double currentEndTimeInList, Trade trade) {
-        log.info(String.format("Adding Trade timestamp=%s to results.", trade.getTimestamp()));
+        log.info(String.format("Adding Trade timestamp=%s to timeBucket=%S.", trade.getTimestamp(), currentEndTimeInList));
         ArrayList<Trade> currentBucketTradeList = tradeBucketsByEndTime.get(currentEndTimeInList);
         currentBucketTradeList.add(trade);
         tradeBucketsByEndTime.put(currentEndTimeInList, currentBucketTradeList);

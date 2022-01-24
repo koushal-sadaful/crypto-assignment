@@ -42,7 +42,7 @@ public class CandleStickChart {
     }
 
     public double getEndTimeOfFirstCandle() {
-        if (candleSticks.size() <= 0) {
+        if (candleSticks == null || candleSticks.size() <= 0) {
             return 0;
         }
         CandleStick firstCandleStick = candleSticks.get(0);
@@ -50,7 +50,7 @@ public class CandleStickChart {
     }
 
     public double getEndTimeOfLastCandle() {
-        if (candleSticks.size() <= 0) {
+        if (candleSticks == null || candleSticks.size() <= 0) {
             return 0;
         }
         CandleStick firstCandleStick = candleSticks.get(candleSticks.size() - 1);

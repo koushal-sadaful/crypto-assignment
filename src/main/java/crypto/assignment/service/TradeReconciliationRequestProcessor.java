@@ -1,8 +1,9 @@
 package crypto.assignment.service;
 
-import crypto.assignment.dto.*;
+import crypto.assignment.dto.CandleStickChart;
+import crypto.assignment.dto.CandleStickChartReconciliationResult;
+import crypto.assignment.dto.Trade;
 import crypto.assignment.transport.CryptoHttpClient;
-import crypto.assignment.utils.CandleStickReconciliation;
 import crypto.assignment.utils.ChartIntervalUtils;
 import crypto.assignment.utils.TimeFormatter;
 import org.slf4j.Logger;
@@ -46,6 +47,9 @@ public class TradeReconciliationRequestProcessor implements ReconciliationReques
                     TimeFormatter.convertUnixToHuman(allTrades.get(0).getTimestamp()),
                     TimeFormatter.convertUnixToHuman(allTrades.get(allTrades.size() - 1).getTimestamp()))
             );
+
+            if (chartFetched.getCandleSticks() == null || chartFetched.getCandleSticks().isEmpty())
+                return new CandleStickChartReconciliationResult(instrumentName, "No chart data to reconcile");
 
             HashMap<Double, ArrayList<Trade>> tradesInTimeBuckets = aggregator.groupByTimeBuckets(allTrades, chartFetched.getEndTimeOfFirstCandle(), chartFetched.getEndTimeOfLastCandle(), chartFetched.getIntervalInMillis());
             CandleStickChartReconciliationResult candleStickChartReconciliationResult = reconciliationEngine.reconcile(chartFetched, tradesInTimeBuckets);

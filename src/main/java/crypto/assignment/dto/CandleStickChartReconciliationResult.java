@@ -32,6 +32,11 @@ public class CandleStickChartReconciliationResult {
         candleStickReconciliationResults = new ArrayList<>();
     }
 
+    public CandleStickChartReconciliationResult(String instrumentName, List<CandleStickReconciliationResult> candleStickReconciliationResults) {
+        this.instrumentName = instrumentName;
+        this.candleStickReconciliationResults = candleStickReconciliationResults;
+    }
+
     public void addResult(CandleStickReconciliationResult result) {
         candleStickReconciliationResults.add(result);
     }
